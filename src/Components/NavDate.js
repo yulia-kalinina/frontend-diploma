@@ -1,14 +1,7 @@
 import { useState } from "react";
 import NavDateItem from "../Components/NavDateItem"
-import FilmsGroup from "./FilmsGroup";
-import { Routes, Route } from "react-router-dom";
 
-export default function NavDate() {
-
-  const today = new Date();
-  const todayFullDate = new Date().toJSON().slice(0, -14);
-
-  const [choosenDate, setChoosenDate] = useState(todayFullDate);
+export default function NavDate({today, setChoosenDate}) {
 
   let arrOfDates = [];
 
@@ -64,10 +57,6 @@ export default function NavDate() {
           </div>
         </div>
       </nav>
-
-      <Routes>
-        <Route path="/:date" element={<FilmsGroup choosenDate={choosenDate}/>}/>
-      </Routes>
 
     </>
   );

@@ -22,11 +22,14 @@ function App() {
         <Route path="/reserve" element={<Reserve />} />
         <Route path="/ticket" element={<Ticket />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/manage" element={
-          <RequireAuth>
-            <HallManage />
-          </RequireAuth>
-        } />
+        <Route
+          path="/manage"
+          element={
+            <RequireAuth>
+              <HallManage />
+            </RequireAuth>
+          }
+        />
       </Routes>
     </Router>
   );

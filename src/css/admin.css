@@ -354,8 +354,6 @@ input {
   font-size: 16px;
 }
 
-
-
 .select-wrapper select {
   appearance: none;
   padding: 8px 30px 8px 8px;
@@ -579,8 +577,6 @@ input:focus {
   cursor: grab;
 }
 
-
-
 .film-grid-image {
   background-color: #666666;
   width: 38px;
@@ -629,19 +625,30 @@ input:focus {
 }
 
 .session-hall-timeline {
+  display: flex;
   box-sizing: border-box;
   border: 1px solid #848484;
   min-height: 60px;
   min-width: 328px;
-  display: flex;
-  justify-content: flex-start;
+  max-width: 100%;
+  position: relative;
 }
 
 .session-hall-timeline-drag {
   background-color: #c5c5c5;
 }
 
+.seance-box {
+  position: absolute;
+  min-width: 65px;
+  max-width: 100%;
+}
+
 .seance-wpap-in-line {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   height: 40px;
   margin-top: 10px;
   border: 1px solid #0000004d;
@@ -653,45 +660,6 @@ input:focus {
   cursor: grab;
 }
 
-.session-hall-timeline > .seance-wpap-in-line-margin-quarter {
-  margin-left: calc(100% / 4);
-}
-
-.session-hall-timeline
-  > .seance-wpap-in-line-margin-quarter
-  ~ .seance-wpap-in-line-margin-quarter {
-  margin-left: 0;
-}
-
-.session-hall-timeline
-  > .seance-wpap-in-line-margin-quarter
-  ~ .seance-wpap-in-line-margin-half {
-  margin-left: calc(100% / 6);
-}
-
-.session-hall-timeline > .seance-wpap-in-line-margin-half {
-  margin-left: calc(100% / 2);
-}
-
-.session-hall-timeline > .seance-wpap-in-line-margin-half ~ .seance-wpap-in-line-margin-half {
-  margin-left: 0;
-}
-
-.session-hall-timeline > .seance-wpap-in-line-margin-three-quarters {
-  margin-left: calc(100% - (100% / 4));
-}
-
-.session-hall-timeline
-  > .seance-wpap-in-line-margin-half
-  ~ .seance-wpap-in-line-margin-three-quarters {
-  margin-left: calc(100% / 6);
-}
-
-.session-hall-timeline > .seance-wpap-in-line-margin-three-quarters ~ .seance-wpap-in-line-margin-three-quarters {
-  margin-left: 0;
-}
-
-
 .seance-wpap-in-line::after {
   content: " ";
   position: absolute;
@@ -700,13 +668,6 @@ input:focus {
   background-color: #848484;
   left: 0;
   bottom: -15px;
-}
-
-.timeline-film-name {
-  box-sizing: border-box;
-  margin-top: 9px;
-  margin-left: 10px;
-  margin-right: 8px;
 }
 
 .seance-lil-time {

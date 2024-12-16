@@ -94,8 +94,6 @@ export default function SessionGrid({
       .then((data) => setArrOfFilms(data.result.films));
   };
 
-  const handlerCancel = () => {};
-
   let currentColor = [202, 255, 133];
   let nextColor = getRandomColor();
   let currentStep = 0;
@@ -119,7 +117,7 @@ export default function SessionGrid({
         })
         .join(", ") +
       ")";
-    if (currentStep == 3) {
+    if (currentStep === 3) {
       currentStep = 0;
       currentColor = nextColor;
       nextColor = getRandomColor();
@@ -137,8 +135,26 @@ export default function SessionGrid({
 
     let findStyle = findFilmBox.getAttribute("style");
     let findStyleSliced = findStyle.slice(18).slice(0, -1);
-    
+
     return findStyleSliced;
+  };
+
+  const henlerFindWidth = (item) => {
+    const findFilm = arrOfFilms.find((el) => el.id === item.seance_filmid);
+    const findFilmDuration = findFilm.film_duration;
+    const findWidth = Math.round((findFilmDuration * 100) / 1440);
+    return findWidth + "%";
+  };
+
+  const henlerFindMargin = (item) => {
+    const findHours = item.seance_time.slice(0, 2);
+    const findMinutes = item.seance_time.slice(3);
+
+    const totalMinutes = +(findHours * 60) + +findMinutes;
+
+    const leftMargin = Math.round((totalMinutes * 100) / 1440);
+
+    return leftMargin + "%";
   };
 
   return (
@@ -224,30 +240,25 @@ export default function SessionGrid({
                           return (
                             <div
                               key={item.id}
-                              draggable={true}
-                              style={{ backgroundColor: findColor(item) }}
-                              className={
-                                item.seance_time >= "00:00" &&
-                                item.seance_time < "06:00"
-                                  ? "seance-wpap-in-line seance-wpap-in-line-start"
-                                  : item.seance_time >= "06:00" &&
-                                    item.seance_time < "12:00"
-                                  ? "seance-wpap-in-line seance-wpap-in-line-margin-quarter"
-                                  : item.seance_time >= "12:00" &&
-                                    item.seance_time < "18:00"
-                                  ? "seance-wpap-in-line seance-wpap-in-line-margin-half"
-                                  : item.seance_time >= "18:00"
-                                  ? "seance-wpap-in-line seance-wpap-in-line-margin-three-quarters"
-                                  : "seance-wpap-in-line"
-                              }
+                              className="seance-box"
+                              style={{
+                                width: henlerFindWidth(item),
+                                left: henlerFindMargin(item),
+                              }}
                             >
-                              <p className="timeline-film-name">
-                                {findFilmName(item.seance_filmid)}
-                              </p>
-                              <span className="seance-lil-time">
-                                {item.seance_time}
-                              </span>
-                              <span className="seance-id">{item.id}</span>
+                              <div
+                                draggable={true}
+                                style={{ backgroundColor: findColor(item) }}
+                                className="seance-wpap-in-line"
+                              >
+                                <p className="timeline-film-name">
+                                  {findFilmName(item.seance_filmid)}
+                                </p>
+                                <span className="seance-lil-time">
+                                  {item.seance_time}
+                                </span>
+                                <span className="seance-id">{item.id}</span>
+                              </div>
                             </div>
                           );
                         })}
@@ -256,18 +267,6 @@ export default function SessionGrid({
                 );
               })}
             </div>
-          </div>
-
-          <div className="popap-button-group popap-button-group-timeline">
-            <button
-              className="popap-button popap-button-cancel"
-              onClick={handlerCancel}
-            >
-              Отмена
-            </button>
-            <button className="popap-button" type="button">
-              Сохранить
-            </button>
           </div>
         </div>
       </div>

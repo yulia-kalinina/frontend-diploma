@@ -24,8 +24,6 @@ export default function Seats() {
       .then((data) => setArrOfHallConfig(data.result));
   }, []);
 
-  console.log(arrOfHallConfig);
-
   return (
     <div className="client-page-wrap">
       <div className="container">

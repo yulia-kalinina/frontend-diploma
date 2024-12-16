@@ -7,8 +7,6 @@ export default function FilmsItem({
   currentDate,
 }) {
 
-  console.log(film);
-
   let findFilmSeancesArr = arrOfSeans.filter(
     (seance) => seance.seance_filmid === film.id
   );

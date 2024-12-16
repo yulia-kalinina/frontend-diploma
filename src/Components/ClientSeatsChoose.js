@@ -8,7 +8,7 @@ export default function ClientSeatsChoose({
   filmName,
   seanceTime,
   currentDate,
-  seanceId
+  seanceId,
 }) {
   let hallName = hall.hall_name;
   let standartCost = hall.hall_price_standart;
@@ -67,6 +67,13 @@ export default function ClientSeatsChoose({
     elem.classList.toggle("client-chosen-chair-view");
 
     findActivePlaces();
+  };
+
+  const handleIsSeatChoosen = (e) => {
+    if (arrOfActiveSeats.length === 0) {
+      alert("Выберите места");
+      e.preventDefault();
+    }
   };
 
   return (
@@ -134,6 +141,7 @@ export default function ClientSeatsChoose({
         <Link
           to="/reserve"
           className="contnent-btn main-content-btn"
+          onClick={handleIsSeatChoosen}
           state={{
             arrOfActiveSeats,
             hallName,
