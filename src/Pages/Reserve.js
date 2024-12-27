@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import ClientLogo from "../Components/ClientLogo";
+import { useState } from "react";
 
 export default function Reserve() {
   const location = useLocation();
@@ -12,6 +13,9 @@ export default function Reserve() {
     seanceId,
   } = location.state;
 
+  const [arrOfTickets, setArrOfTickets] = useState([]);
+  const ticketSeats = [];
+
   const arrOfCost = [];
 
   arrOfActiveSeats.forEach((element) => {
@@ -21,6 +25,35 @@ export default function Reserve() {
 
   let totalCost = 0;
   arrOfCost.map((item) => (totalCost += item));
+
+  arrOfActiveSeats.forEach((element) => {
+    let newSeat = {};
+    newSeat.row = element.row_number;
+    newSeat.place = element.place_number;
+    newSeat.coast = element.cost;
+
+    ticketSeats.push(newSeat);
+  });
+
+  const handleReserveTicket = (e) => {
+    let formData = new FormData();
+    formData.append("seanceId", seanceId);
+    formData.append("ticketDate", currentDate);
+    formData.append("tickets", JSON.stringify(ticketSeats));
+
+    fetch(`https://shfe-diplom.neto-server.ru/ticket`, {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.result) {
+          setArrOfTickets(data.result);
+        } else {
+          alert("Выбранные места уже забронированы");
+        }
+      });
+  };
 
   return (
     <div className="client-page-wrap">
@@ -56,11 +89,11 @@ export default function Reserve() {
             </p>
             <p>
               Стоимость:{" "}
-              <span className="film-description-title">{totalCost} </span>рублей
+              <span className="film-description-title">{totalCost}</span> рублей
             </p>
           </div>
 
-          <div className="link-btn-wrapper">
+          <div className="link-btn-wrapper" onClick={handleReserveTicket}>
             <Link
               to="/ticket"
               className="contnent-btn main-content-btn"
@@ -71,7 +104,7 @@ export default function Reserve() {
                 currentDate,
                 totalCost,
                 arrOfActiveSeats,
-                seanceId,
+                arrOfTickets,
               }}
             >
               Получить код бронирования

@@ -1,5 +1,4 @@
-import { NavLink, Routes, Route } from "react-router-dom";
-import FilmsGroup from "./FilmsGroup";
+import { NavLink } from "react-router-dom";
 
 export default function NavDateItem({ day, setChoosenDate }) {
   const selected = ({ isActive }) =>
@@ -29,7 +28,7 @@ export default function NavDateItem({ day, setChoosenDate }) {
   }
 
   const handlerDateClick = () => {
-    setChoosenDate(day);
+    setChoosenDate(day.full_date);
   };
 
   return (

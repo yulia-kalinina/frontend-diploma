@@ -2,7 +2,12 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/style.css";
 import "./css/admin.css";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 import MainPage from "./Pages/MainPage";
 import Seats from "./Pages/Seats";
@@ -13,11 +18,14 @@ import HallManage from "./Pages/HallManage";
 
 import RequireAuth from "./Hoc/RequireAuth";
 
+const todayNumber = new Date().getDate();
+
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/*" element={<MainPage />} />
+        <Route path="/" element={<Navigate to={`/${todayNumber}`} />} />
+        <Route path="/:id" element={<MainPage />} />
         <Route path="/film" element={<Seats />} />
         <Route path="/reserve" element={<Reserve />} />
         <Route path="/ticket" element={<Ticket />} />
