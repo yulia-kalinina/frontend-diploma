@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/frontend-diploma/static/css/main.940da0ae.css",
-    "main.js": "/frontend-diploma/static/js/main.5f97f158.js",
+    "main.css": "/frontend-diploma/static/css/main.ba33a17f.css",
+    "main.js": "/frontend-diploma/static/js/main.c84dcd68.js",
     "static/js/453.d200cd65.chunk.js": "/frontend-diploma/static/js/453.d200cd65.chunk.js",
     "static/media/admin-background.jpeg": "/frontend-diploma/static/media/admin-background.195d020c70d2955f5661.jpeg",
     "static/media/Roboto-Medium.ttf": "/frontend-diploma/static/media/Roboto-Medium.e73e917f7bfa48666e00.ttf",
@@ -11,12 +11,12 @@
     "static/media/background.jpeg": "/frontend-diploma/static/media/background.8057f0e543a33be5a896.jpeg",
     "static/media/consolas.ttf": "/frontend-diploma/static/media/consolas.cd87e6528d4667aa9465.ttf",
     "index.html": "/frontend-diploma/index.html",
-    "main.940da0ae.css.map": "/frontend-diploma/static/css/main.940da0ae.css.map",
-    "main.5f97f158.js.map": "/frontend-diploma/static/js/main.5f97f158.js.map",
+    "main.ba33a17f.css.map": "/frontend-diploma/static/css/main.ba33a17f.css.map",
+    "main.c84dcd68.js.map": "/frontend-diploma/static/js/main.c84dcd68.js.map",
     "453.d200cd65.chunk.js.map": "/frontend-diploma/static/js/453.d200cd65.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.940da0ae.css",
-    "static/js/main.5f97f158.js"
+    "static/css/main.ba33a17f.css",
+    "static/js/main.c84dcd68.js"
   ]
 }
