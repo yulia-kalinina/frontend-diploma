@@ -11,10 +11,7 @@ export default function Ticket() {
     currentDate,
     totalCost,
     arrOfActiveSeats,
-    arrOfTickets,
   } = location.state;
-
-  console.log(arrOfTickets);
 
   const seatsInfo = [];
 
@@ -29,18 +26,6 @@ export default function Ticket() {
       element.place_number;
     seatsInfo.push(newSeat);
   });
-
-  /*arrOfTickets.forEach((element) => {
-    let newSeat =
-      "ряд:" +
-      " " +
-      element.ticket_row +
-      ", " +
-      "место:" +
-      " " +
-      element.ticket_place;
-    seatsInfo.push(newSeat);
-  });*/
 
   const seatsInfoString = seatsInfo.join("; ");
 

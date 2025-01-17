@@ -4,7 +4,8 @@ import HallInput from "./HallInput";
 
 export default function HallOpenSales({ halls, setArrOfHalls }) {
   const [isActive, setActive] = useState(true);
-  const [activeHallId, setActiveHallId] = useState("");
+  const [activeHallId, setActiveHallId] = useState(halls[0].id);
+
   let btnText = "Открыть продажу билетов";
   let readyStatusTextField = "Выберите зал для открытия/закрытия продаж";
 
@@ -74,6 +75,7 @@ export default function HallOpenSales({ halls, setArrOfHalls }) {
             return (
               <HallInput
                 hall={hall}
+                arrOfHalls={halls}
                 key={hall.id}
                 activeHallId={activeHallId}
                 setActiveHallId={setActiveHallId}

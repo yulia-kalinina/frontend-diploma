@@ -690,6 +690,10 @@ input:focus {
   align-items: last baseline;
 }
 
+.price-config-wrap-frist {
+  margin-bottom: 11px;
+}
+
 .chair-description-space {
   margin-right: 4px;
 }

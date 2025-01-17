@@ -97,11 +97,9 @@ export default function PopapAddTimeline({
               >
                 {arrOfHalls.map((hall) => {
                   return (
-                    <>
-                      <option value={hall.hall_name} key={hall.id}>
-                        {hall.hall_name}
-                      </option>
-                    </>
+                    <option key={hall.id} value={hall.hall_name}>
+                      {hall.hall_name}
+                    </option>
                   );
                 })}
               </select>

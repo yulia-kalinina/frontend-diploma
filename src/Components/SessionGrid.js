@@ -14,6 +14,7 @@ export default function SessionGrid({
   setFilmNameToDeleteSeance,
   setSeanceIdToDeleteSeance,
 }) {
+
   const [isActive, setActive] = useState(true);
 
   const [dragActive, setDragActive] = useState(false);
@@ -133,10 +134,12 @@ export default function SessionGrid({
       el.innerText.includes(filmName)
     );
 
-    let findStyle = findFilmBox.getAttribute("style");
-    let findStyleSliced = findStyle.slice(18).slice(0, -1);
+    if (findFilmBox) {
+      let findStyle = findFilmBox.getAttribute("style");
+      let findStyleSliced = findStyle.slice(18).slice(0, -1);
 
-    return findStyleSliced;
+      return findStyleSliced;
+    }
   };
 
   const henlerFindWidth = (item) => {

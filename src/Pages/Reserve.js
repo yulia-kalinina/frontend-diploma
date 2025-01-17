@@ -1,6 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
 import ClientLogo from "../Components/ClientLogo";
-import { useState } from "react";
 
 export default function Reserve() {
   const location = useLocation();
@@ -13,7 +12,6 @@ export default function Reserve() {
     seanceId,
   } = location.state;
 
-  const [arrOfTickets, setArrOfTickets] = useState([]);
   const ticketSeats = [];
 
   const arrOfCost = [];
@@ -47,10 +45,8 @@ export default function Reserve() {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.result) {
-          setArrOfTickets(data.result);
-        } else {
-          alert("Выбранные места уже забронированы");
+        if (!data.result) {
+          alert("Места уже забронированы");
         }
       });
   };
@@ -93,9 +89,10 @@ export default function Reserve() {
             </p>
           </div>
 
-          <div className="link-btn-wrapper" onClick={handleReserveTicket}>
+          <div className="link-btn-wrapper">
             <Link
               to="/ticket"
+              onClick={handleReserveTicket}
               className="contnent-btn main-content-btn"
               state={{
                 hallName,
@@ -104,7 +101,6 @@ export default function Reserve() {
                 currentDate,
                 totalCost,
                 arrOfActiveSeats,
-                arrOfTickets,
               }}
             >
               Получить код бронирования

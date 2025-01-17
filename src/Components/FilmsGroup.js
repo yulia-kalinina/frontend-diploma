@@ -47,7 +47,7 @@ export default function FilmsGroup({
               />
             );
           })
-        : <div>На сегодня сеансов нет</div>}
+        : null}
     </main>
   );
 }

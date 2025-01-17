@@ -4,35 +4,30 @@ import HallInput from "./HallInput";
 
 export default function PriceConfig({ halls }) {
   const [isActive, setActive] = useState(true);
-  const [activeHallId, setActiveHallId] = useState("");
+  const [activeHallId, setActiveHallId] = useState(halls[0].id);
 
-  const [form, setForm] = useState([
-    {
-      hall_price_standart: "",
-      hall_price_vip: "",
-    },
-  ]);
+  const [priceForm, setPriceForm] = useState({
+    hall_price_standart: halls[0].hall_price_standart,
+    hall_price_vip: halls[0].hall_price_vip,
+  });
+
 
   const handlerClick = () => {
     setActive(!isActive);
   };
 
   const handlerCancel = () => {
-    const findActiveHall = document.querySelector(".hall-item-active");
-    if (findActiveHall) {
-      findActiveHall.classList.remove("hall-item-active");
-      setActiveHallId("");
-    }
+    const activeHall = halls.find((el) => el.id === activeHallId);
 
-    setForm({
-      hall_price_standart: "",
-      hall_price_vip: "",
+    setPriceForm({
+      hall_price_standart: activeHall.hall_price_standart,
+      hall_price_vip: activeHall.hall_price_vip,
     });
   };
 
   const handleChangeForm = ({ target }) => {
     const { name, value } = target;
-    setForm((prevForm) => ({
+    setPriceForm((prevForm) => ({
       ...prevForm,
       [name]: value,
     }));
@@ -47,17 +42,19 @@ export default function PriceConfig({ halls }) {
     }
 
     const formData = new FormData();
-    formData.set("priceStandart", form.hall_price_standart);
-    formData.set("priceVip", form.hall_price_vip);
+    formData.set("priceStandart", priceForm.hall_price_standart);
+    formData.set("priceVip", priceForm.hall_price_vip);
     fetch(`https://shfe-diplom.neto-server.ru/price/${activeHallId}`, {
       method: "POST",
       body: formData,
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
-
-    handlerCancel();
-    alert("Конфигурация выполнена успешно!");
+      .then((data) => {
+        if (data.success === true) {
+          console.log(data);
+          alert("Изменения сохранены. Обновите страницу!");
+        }
+      });
   };
 
   return (
@@ -74,18 +71,21 @@ export default function PriceConfig({ halls }) {
           <div className="drop-content-block">
             {halls.map((hall) => {
               return (
-                <HallInput
-                  hall={hall}
-                  key={hall.id}
-                  activeHallId={activeHallId}
-                  setActiveHallId={setActiveHallId}
-                />
+                <div key={hall.id} className="hall-name-wrap">
+                  <HallInput
+                    hall={hall}
+                    arrOfHalls={halls}
+                    activeHallId={activeHallId}
+                    setActiveHallId={setActiveHallId}
+                    setPriceForm={setPriceForm}
+                  />
+                </div>
               );
             })}
           </div>
 
           <h3 className="drop-subtitle">Установите цены для типов кресел:</h3>
-          <div className="price-config-wrap">
+          <div className="price-config-wrap price-config-wrap-frist">
             <div>
               <label htmlFor="ordinary" className="drop-label">
                 Цена, рублей
@@ -96,7 +96,7 @@ export default function PriceConfig({ halls }) {
                 className="drop-input"
                 placeholder="0"
                 name="hall_price_standart"
-                value={form.hall_price_standart}
+                value={priceForm.hall_price_standart}
                 onChange={handleChangeForm}
                 required
               />
@@ -120,7 +120,7 @@ export default function PriceConfig({ halls }) {
                 className="drop-input"
                 placeholder="0"
                 name="hall_price_vip"
-                value={form.hall_price_vip}
+                value={priceForm.hall_price_vip}
                 onChange={handleChangeForm}
                 required
               />

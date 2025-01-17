@@ -16,19 +16,11 @@ export default function MainPage() {
   useEffect(() => {
     fetch("https://shfe-diplom.neto-server.ru/alldata")
       .then((response) => response.json())
-      .then((data) => setArrOfFilms(data.result.films));
-  }, []);
-
-  useEffect(() => {
-    fetch("https://shfe-diplom.neto-server.ru/alldata")
-      .then((response) => response.json())
-      .then((data) => setArrOfSeans(data.result.seances));
-  }, []);
-
-  useEffect(() => {
-    fetch("https://shfe-diplom.neto-server.ru/alldata")
-      .then((response) => response.json())
-      .then((data) => setArrOfHalls(data.result.halls));
+      .then((data) => {
+        setArrOfFilms(data.result.films);
+        setArrOfSeans(data.result.seances);
+        setArrOfHalls(data.result.halls);
+      });
   }, []);
 
   return (

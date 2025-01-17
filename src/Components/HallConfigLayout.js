@@ -1,17 +1,25 @@
 import { nanoid } from "nanoid";
 import AdminSeatItem from "./AdminSeatItem.js";
 
-export default function HallConfigLayout({ findConfig, rows, seats }) {
-  for (let i = 0; i < rows; i++) {
-    let newRow = [];
+export default function HallConfigLayout({ findConfig, rows, seats, arrOfSeats }) {
 
-    for (let j = 0; j < seats; j++) {
-      const place = {};
-      place.id = nanoid();
-      place.status = "disabled";
-      newRow.push(place);
+  if (findConfig.length === rows && findConfig[0].length) {
+    for (let arr of findConfig) {
+      let newRow = arr.map((el) => (el = { id: nanoid(), status: el }));
+      arrOfSeats.push(newRow);
     }
-    findConfig.push(newRow);
+  } else {
+    for (let i = 0; i < rows; i++) {
+      let newRow = [];
+
+      for (let j = 0; j < seats; j++) {
+        const place = {};
+        place.id = nanoid();
+        place.status = "disabled";
+        newRow.push(place);
+      }
+      arrOfSeats.push(newRow);
+    }
   }
 
   return (
@@ -42,7 +50,7 @@ export default function HallConfigLayout({ findConfig, rows, seats }) {
         <p className="hall-table-title">Экран</p>
         <table className="hall-table">
           <tbody>
-            {findConfig.map((row, index) => {
+            {arrOfSeats.map((row, index) => {
               return (
                 <tr key={index}>
                   {row.map((seat) => {

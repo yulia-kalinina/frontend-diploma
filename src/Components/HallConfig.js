@@ -5,13 +5,14 @@ import HallInput from "./HallInput";
 
 export default function HallConfig({ arrOfHalls }) {
   const [isActive, setActive] = useState(true);
-  const [activeHallId, setActiveHallId] = useState("");
+  const [activeHallId, setActiveHallId] = useState(arrOfHalls[0].id);
+  const [findConfig, setFindConfig] = useState(arrOfHalls[0].hall_config);
 
-  const findConfig = [];
+  const arrOfSeats = [];
 
   const [form, setForm] = useState({
-    hall_rows: "",
-    hall_places: "",
+    hall_rows: arrOfHalls[0].hall_rows,
+    hall_places: arrOfHalls[0].hall_places,
   });
 
   const handlerClick = () => {
@@ -24,18 +25,14 @@ export default function HallConfig({ arrOfHalls }) {
   };
 
   const handlerCancel = () => {
-    const findActiveHall = document.querySelector(".hall-item-active");
-    if (findActiveHall) {
-      findActiveHall.classList.remove("hall-item-active");
-      setActiveHallId("");
-    }
-
-    findConfig.length = 0;
+    const activeHall = arrOfHalls.find((el) => el.id === activeHallId);
 
     setForm({
-      hall_rows: "",
-      hall_places: "",
+      hall_rows: activeHall.hall_rows,
+      hall_places: activeHall.hall_places,
     });
+
+    setFindConfig(activeHall.hall_config);
   };
 
   const handlerHallConfigFormSubmit = (e) => {
@@ -46,28 +43,27 @@ export default function HallConfig({ arrOfHalls }) {
       return;
     }
 
-    if (findConfig.length === 0) {
-      alert("Выберите количество и типы мест в зале");
-      return;
-    } else {
-      for (let i = 0; i < findConfig.length; i++) {
-        findConfig[i] = findConfig[i].map((el) => (el = el.status));
-      }
+    let getFinalConfig = [];
+
+    for (let arr of arrOfSeats) {
+      let newArr = arr.map((el) => (el = el.status));
+      getFinalConfig.push(newArr);
     }
 
     const formData = new FormData();
     formData.set("rowCount", form.hall_rows);
     formData.set("placeCount", form.hall_places);
-    formData.set("config", JSON.stringify(findConfig));
+    formData.set("config", JSON.stringify(getFinalConfig));
     fetch(`https://shfe-diplom.neto-server.ru/hall/${activeHallId}`, {
       method: "POST",
       body: formData,
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
-
-    handlerCancel();
-    alert("Конфигурация выполнена успешно!");
+      .then((data) => {
+        if (data.success === true) {
+          alert("Изменения сохранены. Обновите страницу!");
+        }
+      });
   };
 
   return (
@@ -84,7 +80,14 @@ export default function HallConfig({ arrOfHalls }) {
           {arrOfHalls.map((hall) => {
             return (
               <div key={hall.id} className="hall-name-wrap">
-                <HallInput hall={hall} activeHallId={activeHallId} setActiveHallId={setActiveHallId} />
+                <HallInput
+                  hall={hall}
+                  arrOfHalls={arrOfHalls}
+                  activeHallId={activeHallId}
+                  setActiveHallId={setActiveHallId}
+                  setForm={setForm}
+                  setFindConfig={setFindConfig}
+                />
               </div>
             );
           })}
@@ -132,6 +135,7 @@ export default function HallConfig({ arrOfHalls }) {
           findConfig={findConfig}
           rows={form.hall_rows}
           seats={form.hall_places}
+          arrOfSeats={arrOfSeats}
         />
 
         <div className="popap-button-group full-popap-button-group">
