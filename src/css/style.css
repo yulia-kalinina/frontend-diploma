@@ -307,6 +307,10 @@ a {
   margin-left: 2px;
 }
 
+.non-active-seanse-link {
+  cursor: pointer;
+}
+
 .choose-seat-container {
   background-color: #171d24;
   padding: 15px 30px;

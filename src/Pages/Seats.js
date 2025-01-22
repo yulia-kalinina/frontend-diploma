@@ -6,7 +6,7 @@ import ClientLogo from "../Components/ClientLogo";
 
 export default function Seats() {
   const location = useLocation();
-  const { item, film, arrOfHalls, currentDate } = location.state;
+  const { item, film, arrOfHalls, choosenDate } = location.state;
 
   const [arrOfHallConfig, setArrOfHallConfig] = useState([]);
 
@@ -18,11 +18,11 @@ export default function Seats() {
 
   useEffect(() => {
     fetch(
-      `https://shfe-diplom.neto-server.ru/hallconfig?seanceId=${seanceId}&date=${currentDate}`
+      `https://shfe-diplom.neto-server.ru/hallconfig?seanceId=${seanceId}&date=${choosenDate}`
     )
       .then((response) => response.json())
       .then((data) => setArrOfHallConfig(data.result));
-  }, []);
+  }, [choosenDate, seanceId]);
 
   return (
     <div className="client-page-wrap">
@@ -45,7 +45,7 @@ export default function Seats() {
             hall={findHall}
             filmName={filmName}
             seanceTime={seanceTime}
-            currentDate={currentDate}
+            currentDate={choosenDate}
             seanceId={seanceId}
           />
         </div>

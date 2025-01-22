@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 export default function MainPage() {
   const today = new Date();
   const todayFullDate = new Date().toJSON().slice(0, -14);
+  const currentTime = today.getHours() + ":" + today.getMinutes();
   const [choosenDate, setChoosenDate] = useState(todayFullDate);
 
   const [arrOfFilms, setArrOfFilms] = useState([]);
@@ -46,6 +47,8 @@ export default function MainPage() {
           arrOfHalls={arrOfHalls}
           arrOfSeans={arrOfSeans}
           arrOfFilms={arrOfFilms}
+          todayFullDate={todayFullDate}
+          currentTime={currentTime}
         />
       </div>
     </div>

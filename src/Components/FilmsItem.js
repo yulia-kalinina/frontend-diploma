@@ -4,7 +4,10 @@ export default function FilmsItem({
   film,
   arrOfHalls,
   arrOfSeans,
-  currentDate,
+  choosenDate,
+  todayFullDate,
+  currentTime,
+  locationState,
 }) {
   let findFilmSeancesArr = arrOfSeans.filter(
     (seance) => seance.seance_filmid === film.id
@@ -15,6 +18,12 @@ export default function FilmsItem({
   const findHallsArr = arrOfHalls.filter((hall) =>
     idNumberOfHall.includes(hall.id)
   );
+
+  const handleNonActiveSeanceClick = () => {
+    alert(
+      "Данный сеанс уже идет или закончился! Выберите другой, предстоящий сеанс."
+    );
+  };
 
   return (
     <section className="film-container">
@@ -42,12 +51,30 @@ export default function FilmsItem({
                   {findFilmSeancesArr
                     .filter((el) => el.seance_hallid === hall.id)
                     .map((item) => {
+                      if (
+                        (locationState === null &&
+                          currentTime > item.seance_time) ||
+                        (locationState !== null &&
+                          todayFullDate === locationState.day.full_date &&
+                          currentTime > item.seance_time)
+                      ) {
+                        return (
+                          <li className="select-time-item" key={item.id}>
+                            <div
+                              className="select-time-link non-active-seanse-link"
+                              onClick={handleNonActiveSeanceClick}
+                            >
+                              {item.seance_time}
+                            </div>
+                          </li>
+                        );
+                      }
                       return (
                         <li className="select-time-item" key={item.id}>
                           <Link
                             to="/film"
                             className="select-time-link"
-                            state={{ item, film, arrOfHalls, currentDate }}
+                            state={{ item, film, arrOfHalls, choosenDate }}
                           >
                             {item.seance_time}
                           </Link>
