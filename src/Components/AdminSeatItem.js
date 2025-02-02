@@ -3,15 +3,11 @@ import { useState } from "react";
 export default function AdminSeatItem({ seat }) {
   const [selected, setSelected] = useState("");
 
-  let classOfChair = "";
-
-  if (seat.status === "standart") {
-    classOfChair = "ordinary-chair-view";
-  } else if (seat.status === "vip") {
-    classOfChair = "vip-chair-view";
-  } else if (seat.status === "disabled") {
-    classOfChair = "locked-chair-view";
-  }
+  const classOfChair = {
+    standart: "ordinary-chair-view",
+    vip: "vip-chair-view",
+    disabled: "locked-chair-view",
+  };
 
   const handlerClickSeat = (seat) => {
     if (seat.status === "standart") {
@@ -29,7 +25,7 @@ export default function AdminSeatItem({ seat }) {
   return (
     <td
       id={seat.id}
-      className={`${selected ? selected : classOfChair}`}
+      className={`${selected ? selected : classOfChair[seat.status]}`}
       onClick={() => handlerClickSeat(seat)}
     ></td>
   );

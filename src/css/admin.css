@@ -646,9 +646,10 @@ input:focus {
 
 .seance-wpap-in-line {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+  align-content: center;
   height: 40px;
   margin-top: 10px;
   border: 1px solid #0000004d;
@@ -658,6 +659,13 @@ input:focus {
   color: #000000;
   position: relative;
   cursor: grab;
+}
+
+.timeline-film-name {
+  display: inline-block;
+  width: 100%;
+  padding-left: 10px;
+  padding-top: 9px;
 }
 
 .seance-wpap-in-line::after {

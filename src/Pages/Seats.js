@@ -3,12 +3,10 @@ import { useLocation } from "react-router-dom";
 import ClientSeatsChoose from "../Components/ClientSeatsChoose";
 import ClientLogo from "../Components/ClientLogo";
 
-
 export default function Seats() {
+  const [arrOfHallConfig, setArrOfHallConfig] = useState([]);
   const location = useLocation();
   const { item, film, arrOfHalls, choosenDate } = location.state;
-
-  const [arrOfHallConfig, setArrOfHallConfig] = useState([]);
 
   const findHall = arrOfHalls.find((el) => el.id === item.seance_hallid);
   const hallName = findHall.hall_name;

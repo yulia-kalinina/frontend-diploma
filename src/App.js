@@ -24,8 +24,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to={`/${todayNumber}`} />} />
-        <Route path="/:id" element={<MainPage />} />
+        <Route path="/" element={<Navigate to={`/date/${todayNumber}`} />}>
+          <Route path="/*" element={<Navigate to={`/date/${todayNumber}`} />} />
+        </Route>
+        <Route path="/date/:id" element={<MainPage />} />
         <Route path="/film" element={<Seats />} />
         <Route path="/reserve" element={<Reserve />} />
         <Route path="/ticket" element={<Ticket />} />

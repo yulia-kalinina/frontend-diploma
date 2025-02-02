@@ -3,7 +3,6 @@ import { useState } from "react";
 export default function HallInput({
   hall,
   arrOfHalls,
-  activeHallId,
   setActiveHallId,
   setForm,
   setFindConfig,
@@ -12,15 +11,16 @@ export default function HallInput({
   const [isHallActive, setHallActive] = useState(true);
 
   const handlerHallClick = (hall) => {
-    setActiveHallId(hall.id);
-
     const allHalls = document.querySelectorAll(".hall-item-active");
     const allHallsArr = Array.from(allHalls);
+
     let newArr = allHallsArr.filter((item) => item.id !== hall.id);
 
     newArr.forEach((element) => {
       element.classList.remove("hall-item-active");
     });
+
+    setActiveHallId(hall.id);
 
     setHallActive(!isHallActive);
 

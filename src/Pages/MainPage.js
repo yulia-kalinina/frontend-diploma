@@ -29,7 +29,7 @@ export default function MainPage() {
       <div className="container">
         <div className="client-main-header">
           <div>
-            <ClientLogo />
+            <ClientLogo todayFullDate={todayFullDate} />
           </div>
           <div>
             <Link to="/login" className="contnent-btn">
@@ -44,6 +44,7 @@ export default function MainPage() {
 
         <FilmsGroup
           choosenDate={choosenDate}
+          setChoosenDate={setChoosenDate}
           arrOfHalls={arrOfHalls}
           arrOfSeans={arrOfSeans}
           arrOfFilms={arrOfFilms}

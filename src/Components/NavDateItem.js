@@ -31,13 +31,16 @@ export default function NavDateItem({ day, setChoosenDate }) {
     setChoosenDate(day.full_date);
   };
 
+  const dayInfo = day.full_date;
+
   return (
     <>
       <NavLink
-        to={`/${day.date}`}
+        to={`/date/${day.date}`}
         className={selected}
         state={{ day }}
         onClick={handlerDateClick}
+        id={dayInfo}
       >
         <span
           className={

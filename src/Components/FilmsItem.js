@@ -7,7 +7,8 @@ export default function FilmsItem({
   choosenDate,
   todayFullDate,
   currentTime,
-  locationState,
+  location,
+  locationShortDate,
 }) {
   let findFilmSeancesArr = arrOfSeans.filter(
     (seance) => seance.seance_filmid === film.id
@@ -24,6 +25,8 @@ export default function FilmsItem({
       "Данный сеанс уже идет или закончился! Выберите другой, предстоящий сеанс."
     );
   };
+
+  const todayShortDate = todayFullDate.slice(-2);
 
   return (
     <section className="film-container">
@@ -52,10 +55,11 @@ export default function FilmsItem({
                     .filter((el) => el.seance_hallid === hall.id)
                     .map((item) => {
                       if (
-                        (locationState === null &&
+                        (location.state === null &&
+                          +todayShortDate === +locationShortDate &&
                           currentTime > item.seance_time) ||
-                        (locationState !== null &&
-                          todayFullDate === locationState.day.full_date &&
+                        (location.state !== null &&
+                          +todayShortDate === +location.state.day.date &&
                           currentTime > item.seance_time)
                       ) {
                         return (
@@ -74,7 +78,12 @@ export default function FilmsItem({
                           <Link
                             to="/film"
                             className="select-time-link"
-                            state={{ item, film, arrOfHalls, choosenDate }}
+                            state={{
+                              item,
+                              film,
+                              arrOfHalls,
+                              choosenDate,
+                            }}
                           >
                             {item.seance_time}
                           </Link>

@@ -4,20 +4,20 @@ import HallInput from "./HallInput";
 
 export default function PriceConfig({ halls }) {
   const [isActive, setActive] = useState(true);
-  const [activeHallId, setActiveHallId] = useState(halls[0].id);
+  const [actualHalls, setActualHalls] = useState(halls);
+  const [activeHallId, setActiveHallId] = useState(actualHalls[0].id);
 
   const [priceForm, setPriceForm] = useState({
-    hall_price_standart: halls[0].hall_price_standart,
-    hall_price_vip: halls[0].hall_price_vip,
+    hall_price_standart: actualHalls[0].hall_price_standart,
+    hall_price_vip: actualHalls[0].hall_price_vip,
   });
-
 
   const handlerClick = () => {
     setActive(!isActive);
   };
 
   const handlerCancel = () => {
-    const activeHall = halls.find((el) => el.id === activeHallId);
+    const activeHall = actualHalls.find((el) => el.id === activeHallId);
 
     setPriceForm({
       hall_price_standart: activeHall.hall_price_standart,
@@ -51,8 +51,18 @@ export default function PriceConfig({ halls }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.success === true) {
-          console.log(data);
-          alert("Изменения сохранены. Обновите страницу!");
+          alert("Изменения сохранены!");
+
+          const actualHallsCopy = actualHalls.map((hallObj) =>
+            hallObj.id === data.result.id
+              ? {
+                  ...hallObj,
+                  hall_price_standart: data.result.hall_price_standart,
+                  hall_price_vip: data.result.hall_price_vip,
+                }
+              : hallObj
+          );
+          setActualHalls(actualHallsCopy);
         }
       });
   };
@@ -69,12 +79,12 @@ export default function PriceConfig({ halls }) {
         <form onSubmit={handlerAddPriceFormSubmit}>
           <h3 className="drop-subtitle">Выберите зал для конфигурации:</h3>
           <div className="drop-content-block">
-            {halls.map((hall) => {
+            {actualHalls.map((hall) => {
               return (
                 <div key={hall.id} className="hall-name-wrap">
                   <HallInput
                     hall={hall}
-                    arrOfHalls={halls}
+                    arrOfHalls={actualHalls}
                     activeHallId={activeHallId}
                     setActiveHallId={setActiveHallId}
                     setPriceForm={setPriceForm}

@@ -1,15 +1,20 @@
 import FilmsItem from "./FilmsItem";
-import { useLocation } from "react-router-dom";
+import { replace, useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function FilmsGroup({
   choosenDate,
+  setChoosenDate,
   arrOfHalls,
   arrOfSeans,
   arrOfFilms,
   todayFullDate,
   currentTime,
 }) {
-  const locationState = useLocation().state;
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const goHome = () => navigate("/", { replace: true });
 
   const arrOfOpenHalls = arrOfHalls.filter((elem) => elem.hall_open === 1);
   const idNumbersOfAllOpenHalls = arrOfOpenHalls.map((el) => (el = el.id));
@@ -23,6 +28,29 @@ export default function FilmsGroup({
     idNumberOfFilms.includes(film.id)
   );
 
+  let locationShortDate = location.pathname.slice(-2);
+
+  if (locationShortDate.includes("/")) {
+    locationShortDate = locationShortDate.replace("/", "0");
+  }
+
+  let choosenDateShortDate = choosenDate.slice(-2);
+
+  useEffect(() => {
+    const findActiveDateElem = document.querySelector(".date-item-selected");
+    if (
+      findActiveDateElem &&
+      locationShortDate !== choosenDateShortDate &&
+      !isNaN(parseInt(locationShortDate))
+    ) {
+      const activeDate = findActiveDateElem.id;
+      setChoosenDate(activeDate);
+    }
+    if (isNaN(parseInt(locationShortDate)) || !findActiveDateElem) {
+      goHome();
+    }
+  }, [locationShortDate, choosenDateShortDate, setChoosenDate]);
+
   return (
     <main className="films-group">
       {activeFilmsArr.map((film) => {
@@ -35,7 +63,8 @@ export default function FilmsGroup({
             choosenDate={choosenDate}
             todayFullDate={todayFullDate}
             currentTime={currentTime}
-            locationState={locationState}
+            location={location}
+            locationShortDate={locationShortDate}
           />
         );
       })}

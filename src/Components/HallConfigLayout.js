@@ -1,9 +1,14 @@
 import { nanoid } from "nanoid";
 import AdminSeatItem from "./AdminSeatItem.js";
 
-export default function HallConfigLayout({ findConfig, rows, seats, arrOfSeats }) {
+export default function HallConfigLayout({
+  findConfig,
+  rows,
+  seats,
+  arrOfSeats,
+}) {
 
-  if (findConfig.length === rows && findConfig[0].length) {
+  if (+findConfig.length === +rows && +findConfig[0].length === +seats) {
     for (let arr of findConfig) {
       let newRow = arr.map((el) => (el = { id: nanoid(), status: el }));
       arrOfSeats.push(newRow);

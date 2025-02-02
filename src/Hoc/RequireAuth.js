@@ -4,7 +4,7 @@ export default function RequireAuth({ children }) {
   const auth = localStorage.getItem("user");
 
   if (!auth) {
-    alert("Введите верные логин и пароль");
+    alert("Введите логин и пароль");
     return <Navigate to="/login" />;
   }
 

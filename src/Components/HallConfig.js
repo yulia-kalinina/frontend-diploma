@@ -5,14 +5,15 @@ import HallInput from "./HallInput";
 
 export default function HallConfig({ arrOfHalls }) {
   const [isActive, setActive] = useState(true);
-  const [activeHallId, setActiveHallId] = useState(arrOfHalls[0].id);
-  const [findConfig, setFindConfig] = useState(arrOfHalls[0].hall_config);
+  const [actualArrOfHalls, setActualArrOfHalls] = useState(arrOfHalls);
+  const [activeHallId, setActiveHallId] = useState(actualArrOfHalls[0].id);
+  const [findConfig, setFindConfig] = useState(actualArrOfHalls[0].hall_config);
 
   const arrOfSeats = [];
 
   const [form, setForm] = useState({
-    hall_rows: arrOfHalls[0].hall_rows,
-    hall_places: arrOfHalls[0].hall_places,
+    hall_rows: actualArrOfHalls[0].hall_rows,
+    hall_places: actualArrOfHalls[0].hall_places,
   });
 
   const handlerClick = () => {
@@ -25,7 +26,7 @@ export default function HallConfig({ arrOfHalls }) {
   };
 
   const handlerCancel = () => {
-    const activeHall = arrOfHalls.find((el) => el.id === activeHallId);
+    const activeHall = actualArrOfHalls.find((el) => el.id === activeHallId);
 
     setForm({
       hall_rows: activeHall.hall_rows,
@@ -61,7 +62,20 @@ export default function HallConfig({ arrOfHalls }) {
       .then((response) => response.json())
       .then((data) => {
         if (data.success === true) {
-          alert("Изменения сохранены. Обновите страницу!");
+          alert("Изменения сохранены!");
+
+          const arrOfHallsCopy = actualArrOfHalls.map((hallObj) =>
+            hallObj.id === data.result.id
+              ? {
+                  ...hallObj,
+                  hall_rows: data.result.hall_rows,
+                  hall_places: data.result.hall_places,
+                  hall_config: data.result.hall_config,
+                }
+              : hallObj
+          );
+          setActualArrOfHalls(arrOfHallsCopy);
+          setFindConfig(data.result.hall_config);
         }
       });
   };
@@ -77,12 +91,12 @@ export default function HallConfig({ arrOfHalls }) {
       >
         <h3 className="drop-subtitle">Выберите зал для конфигурации:</h3>
         <div className="drop-content-block">
-          {arrOfHalls.map((hall) => {
+          {actualArrOfHalls.map((hall) => {
             return (
               <div key={hall.id} className="hall-name-wrap">
                 <HallInput
                   hall={hall}
-                  arrOfHalls={arrOfHalls}
+                  arrOfHalls={actualArrOfHalls}
                   activeHallId={activeHallId}
                   setActiveHallId={setActiveHallId}
                   setForm={setForm}
